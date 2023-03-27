@@ -1,0 +1,613 @@
+if KRXL == true then
+error("Running Aready!",0)
+return
+end
+
+pcall(function() getgenv().KRXL = true end)
+-- wlwoekdisis
+while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
+
+function notify(msg)
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+ 
+OrionLib:MakeNotification({
+    Name = "Krunox",
+    Content = msg,
+    Image = "rbxassetid://12862385552",
+    Time = 4
+})
+OrionLib:Init()
+end
+
+-- Setup
+local players = game.Players
+local plr = game:GetService("Players").LocalPlayer
+local plrgui = plr.PlayerGui
+mouse = plr:GetMouse()
+local uis = game:GetService("UserInputService")
+cbringall = false
+anniblockspam = false
+
+local function tpall()
+for i, player in ipairs(game:GetService("Players"):GetPlayers()) do
+if player.Character and player.Character:FindFirstChild("HumanoidRootPart")then 
+player.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame + plr.Character.HumanoidRootPart.CFrame.lookVector * 1
+end
+end
+end
+
+spawn(function()
+while wait() do
+if cbringall == true then
+tpall()
+end
+end
+end)
+
+function rhumanoid()
+local hum = plr.Character:FindFirstChildOfClass("Humanoid")
+hum.Name = "1"
+local newHum = hum:Clone()
+newHum.Parent = plr.Character
+newHum.Name = "Humanoid"
+wait()
+hum:Destroy()
+workspace.CurrentCamera.CameraSubject = plr.Character
+newHum.DisplayDistanceType = "None"
+end
+
+function refreshplr()
+savedpos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+plr.Character.Humanoid.Health = "0"
+plr.Character.Humanoid:Destroy()
+plr.Character:Destroy()
+plr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
+end
+
+game:GetService('RunService').Stepped:connect(function()
+if anniblockspam then
+game.workspace.Tools.Chest_Invisibility_Cloak.Part.CFrame = CFrame.new(plr.Character.HumanoidRootPart.Position)
+
+for i,v in pairs(plr.Character:GetChildren()) do
+if (v:IsA("Tool")) then
+v.Handle.Mesh:Destroy()
+end
+end
+
+for i,v in pairs(plr.Character:GetChildren()) do
+if (v:IsA("Tool")) then
+v.Parent = workspace
+end
+end
+
+end
+end)
+
+
+local function gplr(String)
+local Found = {}
+local strl = String:lower()
+if strl == "all" then
+for i,v in pairs(game:FindService("Players"):GetPlayers()) do
+table.insert(Found,v)
+end
+elseif strl == "others" then
+for i,v in pairs(game:FindService("Players"):GetPlayers()) do
+if v.Name ~= plr.Name then
+table.insert(Found,v)
+end
+end 
+elseif strl == "me" then
+for i,v in pairs(game:FindService("Players"):GetPlayers()) do
+if v.Name == plr.Name then
+table.insert(Found,v)
+end
+end 
+else
+for i,v in pairs(game:FindService("Players"):GetPlayers()) do
+if v.Name:lower():sub(1, #String) == String:lower() or v.DisplayName:lower():sub(1, #String) == String:lower() then
+table.insert(Found,v)
+end
+end 
+end
+return Found 
+end
+
+
+
+local CMDS = Instance.new("ScreenGui")
+local CMDSFRAME = Instance.new("Frame")
+local ScrollingFrame = Instance.new("ScrollingFrame")
+local TextLabel = Instance.new("TextLabel")
+local closegui = Instance.new("TextButton")
+CMDS.Name = "CMDS"
+CMDS.Parent = game:GetService("CoreGui")
+CMDSFRAME.Name = "CMDSFRAME"
+CMDSFRAME.Parent = CMDS
+CMDSFRAME.Active = true
+CMDSFRAME.BackgroundColor3 = Color3.new(0.223529, 0.231373, 0.309804)
+CMDSFRAME.BorderSizePixel = 0
+CMDSFRAME.Draggable = true
+CMDSFRAME.Position = UDim2.new(0, 315, 0, 100)
+CMDSFRAME.Size = UDim2.new(0, 275, 0, 275)
+CMDSFRAME.Visible = false
+ScrollingFrame.Parent = CMDSFRAME
+ScrollingFrame.BackgroundColor3 = Color3.new(0.160784, 0.160784, 0.203922)
+ScrollingFrame.BorderSizePixel = 0
+ScrollingFrame.Position = UDim2.new(0, 0, 0.0729999989, 0)
+ScrollingFrame.Size = UDim2.new(1.04999995, 0, 0.92900002, 0)
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 10, 0)
+TextLabel.Parent = ScrollingFrame
+TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel.BackgroundTransparency = 1
+TextLabel.Size = UDim2.new(0.930000007, 0, 1, 0)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.FontSize = Enum.FontSize.Size18
+TextLabel.Text = "{1} fly - makes you fly\n{2} kill [plr] - kills the player\n{3} bring [plr] - brings the player\n{4} killall - kills everyone (buggy)\n{5} bringall - brings everyone (buggy)\n{5} re/respawn - respawns character\n{6} dex - loads up dex explorer\n{7} gameid/placeid - copies the placeid\n{7} savepos - saves your current position\n{8} loadpos - loads your saved position\n{9} swim - makes you swim\n{10} unswim - stops swimming\n{11} getpos - copies humanoidrootpart position\n{12} speed - changes your walkspeed\n{13} jumppower - changes your jumppower\n{14} tptool/teleporttool - gives teleport tool\n{15} view [plr] - views the player\n{16} unview - stops viewing the player\n{17} rj/rejoin - rejoins the game\n{18} dupetools [val] - clones the tools\n{19} antiban - enables antiban (not sure)\n{20} to [plr] - teleports to player\n{21} prefix [str] - sets prefix to a new one"
+TextLabel.TextColor3 = Color3.new(1, 1, 1)
+TextLabel.TextSize = 15
+TextLabel.TextWrapped = true
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+closegui.Name = "closegui"
+closegui.Parent = CMDSFRAME
+closegui.BackgroundColor3 = Color3.new(0.890196, 0.223529, 0.0588235)
+closegui.BorderSizePixel = 0
+closegui.Position = UDim2.new(0.995000005, 0, 0, 0)
+closegui.Size = UDim2.new(0.0545952693, 0, 0.0728644878, 0)
+closegui.BackgroundTransparency = 1
+closegui.Font = Enum.Font.SourceSansBold
+closegui.FontSize = Enum.FontSize.Size24
+closegui.Text = "X"
+closegui.TextColor3 = Color3.new(1, 1, 1)
+closegui.TextSize = 20
+
+closegui.MouseButton1Click:connect(function()
+	CMDSFRAME.Visible = false
+end)
+
+
+local cmdbar = Instance.new("ScreenGui")
+local cmdframe = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local txtexec = Instance.new("TextBox")
+local thearrow = Instance.new("TextLabel")
+
+--Properties:
+
+cmdbar.Parent = game.CoreGui
+cmdbar.Enabled = false
+
+cmdframe.Parent = cmdbar
+cmdframe.BackgroundColor3 = Color3.fromRGB(9, 9, 9)
+cmdframe.BackgroundTransparency = 0.500
+cmdframe.Position = UDim2.new(0.34, 0, 0.845029235, 0)
+cmdframe.Size = UDim2.new(0, 260, 0, 34)
+
+UICorner.Parent = cmdframe
+
+txtexec.Parent = cmdframe
+txtexec.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+txtexec.BackgroundTransparency = 1.000
+txtexec.Position = UDim2.new(0.138461545, 0, -0.01, 0)
+txtexec.Size = UDim2.new(0, 200, 0, 50)
+txtexec.Font = Enum.Font.Gotham
+txtexec.Text = ""
+txtexec.TextColor3 = Color3.fromRGB(255, 255, 255)
+txtexec.TextSize = 28.000
+txtexec.TextWrapped = true
+txtexec.TextXAlignment = Enum.TextXAlignment.Left
+txtexec.TextYAlignment = Enum.TextYAlignment.Top
+txtexec.ClearTextOnFocus = false
+txtexec.PlaceholderText = "Press Qoute To Focus"
+
+thearrow.Parent = cmdframe
+thearrow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+thearrow.BackgroundTransparency = 1.000
+thearrow.Position = UDim2.new(-0.303846151, 0, -0.235293865, 0)
+thearrow.Size = UDim2.new(0, 200, 0, 50)
+thearrow.Font = Enum.Font.Code
+thearrow.Text = ">"
+thearrow.TextColor3 = Color3.fromRGB(255, 145, 19)
+thearrow.TextSize = 37.000
+
+local function FadeIn()
+for i = 1, 0, -0.3 do
+wait(0.1)
+cmdframe.Transparency = i
+end
+cmdframe.Transparency = 0
+cmdbar.Enabled = true
+end
+
+local function FadeOut()
+for i = 0, 1, 0.3 do
+wait(0.1)
+cmdframe.Transparency = i
+end
+cmdframe.Transparency = 1
+cmdbar.Enabled = false
+end
+
+
+local Name = "KRXL.ts"
+
+local DefaultSettings = {
+Aimbot = false,
+Prefix = ":",
+userisnew = false,
+InstantKill = true,
+ESP = true
+}
+
+local Settings
+
+if not pcall(function() readfile(Name) end) then 
+writefile(Name, 
+game:service'HttpService':JSONEncode(DefaultSettings)) end
+
+Settings = game:service'HttpService':JSONDecode(readfile(Name))
+
+local function Save()
+writefile(Name,game:service'HttpService':JSONEncode(Settings))
+end
+
+
+function CMDBARFOCUS()
+cmdbar.Enabled = true
+FadeIn()
+txtexec.Text = Settings.Prefix
+txtexec:CaptureFocus()
+end
+
+uis.InputBegan:Connect(function(input)
+if input.KeyCode == Enum.KeyCode.Quote then
+CMDBARFOCUS()
+end
+end)
+
+chatbox = plrgui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+
+chatbox:GetPropertyChangedSignal("Text"):Connect(function()
+if chatbox.Text:lower():sub(1,1) == Settings.Prefix then
+chatbox.FocusLost:Connect(function(chtcmd)
+if chtcmd then
+txtexec.Text = chatbox.Text
+txtexec:CaptureFocus()
+wait(0.1)
+txtexec:ReleaseFocus()
+end
+end)
+end
+end)
+
+function chatboxcommands()
+if chatbox.Text:lower():sub(1,1) == Settings.Prefix then
+local A_1 = "" ..txtexec.text.. ""
+local A_2 = "All"
+local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+Event:FireServer(A_1, A_2)
+end
+chatbox.Text = ""
+end
+
+
+-- cmdbar
+
+txtexec.FocusLost:Connect(function(enterPressed)
+FadeOut()
+if string.sub(txtexec.Text, 1, 4) == (Settings.Prefix.."to ") then
+for i,v in pairs(gplr(string.sub(txtexec.Text, 5))) do
+local target = game:GetService("Players")
+[v.Name]
+if target.Character ~= nil then
+if plr.Character:FindFirstChildOfClass('Humanoid') and plr.Character:FindFirstChildOfClass('Humanoid').SeatPart then				plr.Character:FindFirstChildOfClass('Humanoid').Sit = false
+wait(.1)
+end
+plr.Character.HumanoidRootPart.CFrame = target.Character.Head.CFrame
+end
+end
+end
+
+if string.sub(txtexec.Text, 1, 9) == (Settings.Prefix.."fpsboost") then
+local a = game
+local b = a.Workspace
+local c = a.Lighting
+local d = b.Terrain
+d.WaterWaveSize = 0
+d.WaterWaveSpeed = 0
+d.WaterReflectance = 0
+d.WaterTransparency = 0
+c.GlobalShadows = false
+c.FogEnd = 9e9
+c.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for e, f in pairs(a:GetDescendants()) do
+if f:IsA("Part") or f:IsA("Union") or f:IsA("CornerWedgePart") or f:IsA("TrussPart") then
+f.Material = "Plastic"
+f.Reflectance = 0
+elseif f:IsA("Decal") or f:IsA("Texture") then
+f.Transparency = 0
+elseif f:IsA("ParticleEmitter") or f:IsA("Trail") then
+f.Lifetime = NumberRange.new(0)
+elseif f:IsA("Explosion") then
+f.BlastPressure = 0
+f.BlastRadius = 0
+elseif f:IsA("Fire") or f:IsA("SpotLight") or f:IsA("Smoke") or f:IsA("Sparkles") then
+f.Enabled = false
+elseif f:IsA("MeshPart") then
+f.Material = "Plastic"
+f.Reflectance = 0
+f.TextureID = 10385902758728957
+end
+end
+for e, g in pairs(c:GetChildren()) do
+if
+g:IsA("BlurEffect") or g:IsA("SunRaysEffect") or g:IsA("ColorCorrectionEffect") or g:IsA("BloomEffect") or
+g:IsA("DepthOfFieldEffect")
+then
+g.Enabled = false
+end
+end
+sethiddenproperty(game.Lighting, "Technology", "Compatibility")
+end
+
+if string.sub(txtexec.Text, 1, 17) == (Settings.Prefix.."antiban") then
+local renv = getrenv()
+local old_spawn = renv.spawn
+renv.spawn = function(f)
+local env = getfenv(0)
+if env.Ban then
+env.Ban = function() print('caught ban') end
+error('caught ban') -- prevent it from going on to lag the game out
+end
+old_spawn(f)
+end
+local mt = getrawmetatable(game)
+local namecall = mt.__namecall
+mt.__namecall = function(...)
+local arguments = {...}
+if arguments[1].Name == 'RequestWeapon' and arguments[#arguments] == 'FireServer' and arguments[2] == 'Ban' then
+return
+end
+return namecall(...)
+end
+end
+
+
+if string.sub(txtexec.Text, 1, 6) == (Settings.Prefix.."kill ") then
+savedpos = plr.Character:FindFirstChild("HumanoidRootPart").CFrame
+for i,v in pairs(gplr(string.sub(txtexec.Text, 7))) do
+rhumanoid()
+for i,v in pairs(game:GetService'Players'.LocalPlayer.Backpack:GetChildren()) do
+plr.Character.Humanoid:EquipTool(v)
+end
+local Tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+repeat wait()
+plr.Character.HumanoidRootPart.CFrame = game:GetService("Players")[v.Name].Character.HumanoidRootPart.CFrame
+until Tool.Parent == game:GetService("Players")[v.Name].Character
+plr.Character.Humanoid.Health = 0
+plr.Character = nil
+plr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
+end
+end
+
+if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."killall") then
+savedpos = plr.Character:FindFirstChild("HumanoidRootPart").CFrame
+cbringall = true
+rhumanoid()
+for _, tool in ipairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+if tool:IsA("Tool") then
+tool.Parent = game:GetService("Players").LocalPlayer.Character
+end
+end
+wait(1.5)
+cbringall = false
+game.Players.LocalPlayer.Character.Humanoid.Health = 0
+game.Players.LocalPlayer.Character = nil
+plr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
+end
+
+
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."bring ") then
+savedpos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+rhumanoid()
+for i,v in pairs(game:GetService'Players'.LocalPlayer.Backpack:GetChildren()) do
+plr.Character.Humanoid:EquipTool(v)
+local Tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+for i,v in pairs(gplr(string.sub(txtexec.Text, 8))) do
+repeat wait()
+game:GetService("Players")[v.Name].Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
+until Tool.Parent == game:GetService("Players")[v.Name].Character
+end
+plr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
+end
+end
+
+
+if string.sub(txtexec.Text, 1, 9) == (Settings.Prefix.."bringall") then
+savedpos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+cbringall = true
+rhumanoid()
+for _, tool in ipairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+if tool:IsA("Tool") then
+tool.Parent = game:GetService("Players").LocalPlayer.Character
+end
+end
+wait(1.5)
+cbringall = false
+plr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
+end
+
+if string.sub(txtexec.Text, 1, 3) == (Settings.Prefix.."rj") then
+local ts = game:GetService("TeleportService")
+local p = game:GetService("Players").LocalPlayer
+ts:Teleport(game.PlaceId, p)
+end
+
+if string.sub(txtexec.Text, 1, 11) == (Settings.Prefix.."dupetools ") then
+for i=1,string.sub(txtexec.Text, 12) do 
+           
+local block = Instance.new("Part")
+local bp = Instance.new("BodyPosition")
+block.CFrame = CFrame.new(9e9,9e9,9e9)
+block.Anchored = true
+local player = game.Players.LocalPlayer
+local character = player.Character
+local savepos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+for i,v in pairs(player.Backpack:GetChildren()) do
+   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = block.CFrame
+v.Parent = Character bp.Parent = v.Handle bp.Position = block.Position v.Handle.Velocity = Vector3.new(25.70,0,0) v.Handle.RotVelocity = Vector3.new(9e9,9e9,9e9)  v.Parent = game.Players.LocalPlayer.Backpack wait(1)   v.Parent = character task.wait(0)   v.Parent = workspace 
+end
+character:ClearAllChildren()
+wait(7)
+for i,v in pairs(game.workspace:GetDescendants()) do 
+       if v:IsA("Tool") and v:FindFirstChild("Handle") then
+           v.Handle.CanCollide = false
+           bp:Destroy()
+           v.Handle.RotVelocity = Vector3.new(0,0,0)
+           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savepos
+           v.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+           block:Destroy()
+       end
+     
+end
+end
+end
+
+if string.sub(txtexec.Text, 1, 10) == (Settings.Prefix.."nomeshtool") then
+for i,v in pairs(plr.Character:GetChildren()) do
+if (v:IsA("Tool")) then
+v.Handle.Mesh:Destroy()
+end
+end
+end
+
+if string.sub(txtexec.Text, 1, 5) == (Settings.Prefix.."cmds") then
+CMDSFRAME.Visible = true
+end
+
+if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."prefix ") then
+Settings.Prefix = string.sub(txtexec.Text, 9)
+Save()
+end
+
+if string.sub(txtexec.Text, 1, 5) == (Settings.Prefix.."test") then
+Settings.Aimbot = true
+Save()
+end
+
+if string.sub(txtexec.Text, 1, 6) == (Settings.Prefix.."check") then
+print(Settings.Aimbot)
+end
+
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."rejoin") then
+local ts = game:GetService("TeleportService")
+local p = game:GetService("Players").LocalPlayer
+ts:Teleport(game.PlaceId, p)
+end
+
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."excats") then
+game.workspace.muffy.Head:Remove()
+game.workspace.socky.head:Remove()
+end
+
+
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."reach ") then
+for i,v in pairs(game:GetService'Players'.LocalPlayer.Character:GetChildren())do 
+if v:isA("Tool") then 
+local a = Instance.new("SelectionBox",v.Handle)
+a.Adornee = v.Handle 
+v.Handle.Size = Vector3.new(0.5,0.5,string.sub(txtexec.Text, 8)) 
+v.GripPos = Vector3.new(0,0,0) 
+game.Players.LocalPlayer.Character.Humanoid:UnequipTools() 
+end 
+end
+end
+
+if string.sub(txtexec.Text, 1, 4) == (Settings.Prefix.."fly") then
+loadstring(game:HttpGet("https://gist.githubusercontent.com/meozoneYT/bf037dff9f0a70017304ddd67fdcd370/raw/e14e74f425b060df523343cf30b787074eb3c5d2/arceus%2520x%2520fly%25202%2520obflucator"))()
+end
+
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."unview") then
+game:GetService("Workspace").CurrentCamera.CameraSubject = plr.Character.Humanoid
+end
+
+if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."chathax") then
+loadstring(game:HttpGet("https://pastebin.com/raw/w5YvN4Rd"))()
+end
+
+if string.sub(txtexec.Text, 1, 6) == (Settings.Prefix.."view ") then
+for i,v in pairs(gplr(string.sub(txtexec.Text, 7))) do
+game:GetService("Workspace").CurrentCamera.CameraSubject = game:GetService("Players")[v.Name].Character
+end
+end
+
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."speed ") then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = string.sub(txtexec.Text, 8)
+end
+
+if string.sub(txtexec.Text, 1, 11) == (Settings.Prefix.."jumppower ") then
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = string.sub(txtexec.Text, 12)
+end
+
+if string.sub(txtexec.Text, 1, 5) == (Settings.Prefix.."swim") then
+-- below is not my code
+workspace.Gravity = 0
+
+plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,false) plr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
+end
+
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."unswim") then
+workspace.Gravity = 195.96
+plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,false) plr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,false) plr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics)
+end
+
+if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."placeid") then
+setclipboard(tostring(game.PlaceId))
+notify("PlaceId Copied To Clipboard.")
+end
+if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."getpos") then
+setclipboard(tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame))
+notify("Position Copied To Clipboard.")
+end
+
+if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."savepos") then
+savedpos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
+end
+
+if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."loadpos") then
+game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = savedpos
+end
+
+if string.sub(txtexec.Text, 1, 10) == (Settings.Prefix.."blockspam") then
+anniblockspam = true
+end
+
+if string.sub(txtexec.Text, 1, 12) == (Settings.Prefix.."unblockspam") then
+anniblockspam = false
+end
+
+if string.sub(txtexec.Text, 1, 4) == (Settings.Prefix.."dex") then
+loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))()
+end
+
+if string.sub(txtexec.Text, 1, 3) == (Settings.Prefix.."re") or string.sub(txtexec.Text, 1, 8) == (prefix.."respawn") then
+refreshplr()
+end
+if enterPressed then
+chatboxcommands()
+end
+end)
+
+notify("Welcome\nKrunox v1.1")
+wait(3)
+notify("Defualt Prefix is ':' ")
+wait(2)
+notify("Press Qoute for CmdBar")
+while true do
+for i = 1, 360 do
+thearrow.TextColor3 = Color3.fromHSV(i / 360, 1, 1)
+task.wait()
+end
+end
