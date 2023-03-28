@@ -70,19 +70,14 @@ game.workspace.Tools.Chest_Invisibility_Cloak.Part.CFrame = CFrame.new(plr.Chara
 
 if plr.Backpack:FindFirstChild("InvisibilityCloak") then
 plr.Character.Humanoid:EquipTool(plr.Backpack.InvisibilityCloak)
+else
 end
 
-for i,v in pairs(plr.Character:GetChildren()) do
-if (v:IsA("Tool")) then
-v.Handle.Mesh:Destroy()
+if plr.Character.InvisibilityCloak.Handle:FindFirstChild("Mesh") then
+plr.Character:FindFirstChild("InvisibilityCloak").Handle.Mesh:Destroy()
+else
 end
-end
-
-for i,v in pairs(plr.Character:GetChildren()) do
-if (v:IsA("Tool")) then
-v.Parent = workspace
-end
-end
+plr.Character.InvisibilityCloak.Parent = workspace
 
 end
 end)
@@ -631,7 +626,7 @@ chatboxcommands()
 end
 end)
 
-notify("Welcome\nKrunox v1.2")
+notify("Welcome\nKrunox v1.3")
 wait(3)
 notify("Defualt Prefix is ':' ")
 wait(2)
