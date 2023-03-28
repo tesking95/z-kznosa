@@ -496,6 +496,10 @@ Settings.Prefix = string.sub(txtexec.Text, 9)
 Save()
 end
 
+if string.sub(txtexec.Text, 1, 9) == (Settings.Prefix.."focusbar") then
+CMDBARFOCUS()
+end
+
 if string.sub(txtexec.Text, 1, 5) == (Settings.Prefix.."test") then
 Settings.Aimbot = true
 Save()
