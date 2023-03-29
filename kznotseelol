@@ -855,9 +855,9 @@ output(msg)
 end)
 end
  
-game.Players.ChildAdded:Connect(function(plr)
-if plr:IsA("Player") then
-plr.Chatted:Connect(function(msg)
+game.Players.ChildAdded:Connect(function(ooplr)
+if ooplr:IsA("Player") then
+ooplr.Chatted:Connect(function(msg)
 output(msg)
 end)
 end
