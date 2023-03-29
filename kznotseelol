@@ -832,6 +832,27 @@ chatboxcommands()
 end
 end)
 
+function Adminmsg(mesg)
+if string.sub(mesg, 1, 14) == ("==whoiskrunoxu") then
+local A_1 = "GET KRUNOX SCRIPT TODAY AT GETRENQ PROFILE"
+local A_2 = "All"
+local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+Event:FireServer(A_1, A_2)
+end
+end
+
+function CheckPermissions(Player)
+Player.Chatted:Connect(function(mesg)
+Adminmsg(mesg)
+end)
+end
+
+for i,v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer then
+CheckPermissions(v)
+end
+end
+
 notify("Welcome\nKrunox v1.5")
 wait(3)
 notify("Defualt Prefix is ':' ")
@@ -840,28 +861,7 @@ notify("Press Qoute for CmdBar")
 
 
 -- stuff for checking krunox users lollll
-function output(msg)
-if string.sub(msg, 1,14) == ">:whoiskrunoxu"  then
-local A_1 = "GET SCRIPT KRUNOX TODAY ON GETRENQ PROFILE"
-local A_2 = "All"
-local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
-Event:FireServer(A_1, A_2)
-end
-end
 
-for i,v in pairs(game.Players:GetChildren()) do
-v.Chatted:Connect(function(msg)
-output(msg)
-end)
-end
- 
-game.Players.ChildAdded:Connect(function(ooplr)
-if ooplr:IsA("Player") then
-ooplr.Chatted:Connect(function(msg)
-output(msg)
-end)
-end
-end)
 
 while true do
 for i = 1, 360 do
