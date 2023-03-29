@@ -143,7 +143,7 @@ TextLabel.BackgroundTransparency = 1
 TextLabel.Size = UDim2.new(0.930000007, 0, 1, 0)
 TextLabel.Font = Enum.Font.SourceSans
 TextLabel.FontSize = Enum.FontSize.Size18
-TextLabel.Text = "{1} fly - makes you fly\n{2} kill [plr] - kills the player\n{3} bring [plr] - brings the player\n{4} killall - kills everyone (buggy)\n{5} bringall - brings everyone (buggy)\n{5} re/respawn - respawns character\n{6} dex - loads up dex explorer\n{7} gameid/placeid - copies the placeid\n{7} savepos - saves your current position\n{8} loadpos - loads your saved position\n{9} swim - makes you swim\n{10} unswim - stops swimming\n{11} getpos - copies humanoidrootpart position\n{12} speed - changes your walkspeed\n{13} jumppower - changes your jumppower\n{14} tptool/teleporttool - gives teleport tool\n{15} view [plr] - views the player\n{16} unview - stops viewing the player\n{17} rj/rejoin - rejoins the game\n{18} dupetools [val] - clones the tools\n{19} antiban - enables antiban (not sure)\n{20} to [plr] - teleports to player\n{21} prefix [str] - sets prefix to a new one\n{22} spblockspam - starter place block spam\n{23} unspblockspam - stops block spam\n{24} firecd/fireclickdetector - fires all clickdetectors\n{25} nocdlimits - removes clickdetector limits"
+TextLabel.Text = "{1} fly - makes you fly\n{2} kill [plr] - kills the player\n{3} bring [plr] - brings the player\n{4} killall - kills everyone (buggy)\n{5} bringall - brings everyone (buggy)\n{5} re/respawn - respawns character\n{6} dex - loads up dex explorer\n{7} gameid/placeid - copies the placeid\n{7} savepos - saves your current position\n{8} loadpos - loads your saved position\n{9} swim - makes you swim\n{10} unswim - stops swimming\n{11} getpos - copies humanoidrootpart position\n{12} speed - changes your walkspeed\n{13} jumppower - changes your jumppower\n{14} tptool/teleporttool - gives teleport tool\n{15} view [plr] - views the player\n{16} unview - stops viewing the player\n{17} rj/rejoin - rejoins the game\n{18} dupetools [val] - clones the tools\n{19} antiban - enables antiban (not sure)\n{20} to [plr] - teleports to player\n{21} prefix [str] - sets prefix to a new one\n{22} spblockspam - starter place block spam\n{23} unspblockspam - stops block spam\n{24} firecd/fireclickdetector - fires all clickdetectors\n{25} nocdlimits - removes clickdetector limits\n{26} unfly - stops flying\n{27} fly2 - sit fly lol\n{28} sit - makes your character sit"
 TextLabel.TextColor3 = Color3.new(1, 1, 1)
 TextLabel.TextSize = 15
 TextLabel.TextWrapped = true
@@ -511,6 +511,10 @@ if string.sub(txtexec.Text, 1, 6) == (Settings.Prefix.."check") then
 print(Settings.Aimbot)
 end
 
+if string.sub(txtexec.Text, 1, 4) == (Settings.Prefix.."sit") then
+plr.Character:FindFirstChildOfClass("Humanoid").Sit = true
+end
+
 if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."rejoin") then
 local ts = game:GetService("TeleportService")
 local p = game:GetService("Players").LocalPlayer
@@ -742,6 +746,17 @@ if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."flygui") then
 loadstring(game:HttpGet("https://gist.githubusercontent.com/meozoneYT/bf037dff9f0a70017304ddd67fdcd370/raw/e14e74f425b060df523343cf30b787074eb3c5d2/arceus%2520x%2520fly%25202%2520obflucator"))()
 end
 
+if string.sub(txtexec.Text, 1, 5) == (Settings.Prefix.."fly2") then
+txtexec.Text = ":sit"
+txtexec:CaptureFocus()
+wait(0.1)
+txtexec:ReleaseFocus()
+wait(1)
+txtexec.Text = ":fly 1"
+txtexec:CaptureFocus()
+wait(0.1)
+txtexec:ReleaseFocus()
+end
 
 if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."unview") then
 game:GetService("Workspace").CurrentCamera.CameraSubject = plr.Character.Humanoid
@@ -817,7 +832,7 @@ chatboxcommands()
 end
 end)
 
-notify("Welcome\nKrunox v1.4")
+notify("Welcome\nKrunox v1.5")
 wait(3)
 notify("Defualt Prefix is ':' ")
 wait(2)
