@@ -1164,10 +1164,12 @@ local TextButton = Instance.new("TextButton")
 local TextButton_2 = Instance.new("TextButton")
 local TextButton_3 = Instance.new("TextButton")
 local TextButton_4 = Instance.new("TextButton")
+local open = Instance.new("TextButton")
 local UICorner_1 = Instance.new("UICorner")
 local UICorner_2 = Instance.new("UICorner")
 local UICorner_3 = Instance.new("UICorner")
 local UICorner_4 = Instance.new("UICorner")
+local UICorner_5 = Instance.new("UICorner")
 local Frame = Instance.new("Frame")
 
 maingui.Name = "maingui"
@@ -1183,6 +1185,7 @@ TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton.TextSize = 14.000
 TextButton.BorderSizePixel = 0
 TextButton.Text = "Executor"
+TextButton.Visible = false
 UICorner_1.Parent = TextButton
 
 TextButton_2.Parent = maingui
@@ -1194,6 +1197,7 @@ TextButton_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton_2.TextSize = 14.000
 TextButton_2.BorderSizePixel = 0
 TextButton_2.Text = "Script Browser"
+TextButton_2.Visible = false
 UICorner_2.Parent = TextButton_2
 
 TextButton_3.Parent = maingui
@@ -1205,6 +1209,7 @@ TextButton_3.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton_3.TextSize = 14.000
 TextButton_3.BorderSizePixel = 0
 TextButton_3.Text = "Settings"
+TextButton_3.Visible = false
 UICorner_3.Parent = TextButton_3
 
 TextButton_4.Parent = maingui
@@ -1216,7 +1221,19 @@ TextButton_4.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton_4.TextSize = 14.000
 TextButton_4.BorderSizePixel = 0
 TextButton_4.Text = "Close"
+TextButton_4.Visible = false
 UICorner_4.Parent = TextButton_4
+
+open.Parent = maingui
+open.BackgroundColor3 = Color3.fromRGB(9, 9, 9)
+open.Position = UDim2.new(0.01, 0, 0.9, 0)
+open.Size = UDim2.new(0, 70, 0, 50)
+open.Font = Enum.Font.SourceSans
+open.TextColor3 = Color3.fromRGB(255, 255, 255)
+open.TextSize = 14.000
+open.BorderSizePixel = 0
+open.Text = "Menu"
+UICorner_5.Parent = open
 
 Frame.Parent = maingui
 Frame.BackgroundColor3 = Color3.fromRGB(9, 9, 9)
@@ -1224,8 +1241,33 @@ Frame.Position = UDim2.new(0.744548321, 0, 0.207602322, 0)
 Frame.Size = UDim2.new(0, 400, 0, 300)
 Frame.Visible = false
 
-TextButton.MouseButton1Click:connect(function()
-	ScriptBloxSearcher.Enabled = true
+blur = Instance.new("BlurEffect", game.Lighting)
+blur.Size = 0
+
+TextButton_2.MouseButton1Click:connect(function()
+ScriptBloxSearcher.Enabled = true
+end)
+
+TextButton_4.MouseButton1Click:connect(function()
+TextButton.Visible = false
+wait(0.20)
+TextButton_2.Visible = false
+wait(0.20)
+TextButton_3.Visible = false
+wait(0.20)
+TextButton_4.Visible = false
+blur.Size = 0
+end)
+
+open.MouseButton1Click:connect(function()
+blur.Size = 35
+TextButton.Visible = true
+wait(0.20)
+TextButton_2.Visible = true
+wait(0.20)
+TextButton_3.Visible = true
+wait(0.20)
+TextButton_4.Visible = true
 end)
 
 local CMDS = Instance.new("ScreenGui")
@@ -1966,7 +2008,7 @@ CheckPermissions(v)
 end
 end
 
-notify("Welcome\nKrunox v1.5")
+notify("Welcome\nKrunox v1.6")
 wait(3)
 notify("Defualt Prefix is ':' ")
 wait(2)
