@@ -2004,11 +2004,6 @@ end
 
 end)
 
--- load settings lol
-if Settings.keepcmdbar == true then
-cmdbar.Enabled = true
-cmdframe.BackgroundTransparency = 0
-end
 
 notify("Welcome\nKrunox v3")
 wait(3)
