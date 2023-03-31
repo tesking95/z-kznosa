@@ -1999,33 +1999,18 @@ loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))
 end
 
 if string.sub(txtexec.Text, 1, 3) == (Settings.Prefix.."re") or string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."respawn") then
-refreshplr()
+game.Players.LocalPlayer.Character.Humanoid.Health = "0"
 end
 
 end)
 
-function Adminmsg(mesg)
-if string.sub(mesg, 1, 14) == ("==whoiskrunoxu") then
-local A_1 = "GET KRUNOX SCRIPT TODAY AT GETRENQ PROFILE"
-local A_2 = "All"
-local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
-Event:FireServer(A_1, A_2)
-end
+-- load settings lol
+if Settings.keepcmdbar == true then
+cbar.Enabled = true
+cmdframe.BackgroundTransparency = 0
 end
 
-function CheckPermissions(Player)
-Player.Chatted:Connect(function(mesg)
-Adminmsg(mesg)
-end)
-end
-
-for i,v in pairs(game.Players:GetPlayers()) do
-if v ~= game.Players.LocalPlayer then
-CheckPermissions(v)
-end
-end
-
-notify("Welcome\nKrunox v2")
+notify("Welcome\nKrunox v3")
 wait(3)
 notify("Defualt Prefix is ':' ")
 wait(2)
