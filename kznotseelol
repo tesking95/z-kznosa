@@ -2006,7 +2006,7 @@ end)
 
 -- load settings lol
 if Settings.keepcmdbar == true then
-cbar.Enabled = true
+cmdbar.Enabled = true
 cmdframe.BackgroundTransparency = 0
 end
 
