@@ -29,6 +29,7 @@ cbringall = false
 anniblockspam = false
 nowe = false
 
+
 local function tpall()
 for i, player in ipairs(game:GetService("Players"):GetPlayers()) do
 if player.Character and player.Character:FindFirstChild("HumanoidRootPart")then 
@@ -60,7 +61,6 @@ end
 function refreshplr()
 savedpos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
 plr.Character.Humanoid.Health = "0"
-plr.Character.Humanoid:Destroy()
 plr.Character:Destroy()
 plr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
 end
@@ -1335,7 +1335,7 @@ cmdbar.Enabled = false
 
 cmdframe.Parent = cmdbar
 cmdframe.BackgroundColor3 = Color3.fromRGB(9, 9, 9)
-cmdframe.BackgroundTransparency = 0.500
+cmdframe.BackgroundTransparency = 0
 cmdframe.Position = UDim2.new(0.34, 0, 0.845029235, 0)
 cmdframe.Size = UDim2.new(0, 260, 0, 34)
 
@@ -1391,6 +1391,7 @@ local DefaultSettings = {
 Aimbot = false,
 Prefix = ":",
 userisnew = false,
+keepcmdbar = false,
 InstantKill = true,
 ESP = true
 }
@@ -1456,7 +1457,16 @@ end)
 -- cmdbar
 
 txtexec.FocusLost:Connect(function(enterPressed)
+if Settings.keepcmdbar == false then
 FadeOut()
+else
+-- print("user has keepcmdbaron")
+end
+
+if enterPressed then
+chatboxcommands()
+end
+
 if string.sub(txtexec.Text, 1, 4) == (Settings.Prefix.."to ") then
 for i,v in pairs(gplr(string.sub(txtexec.Text, 5))) do
 local target = game:GetService("Players")
@@ -1651,10 +1661,6 @@ end
 if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."prefix ") then
 Settings.Prefix = string.sub(txtexec.Text, 9)
 Save()
-end
-
-if string.sub(txtexec.Text, 1, 9) == (Settings.Prefix.."focusbar") then
-CMDBARFOCUS()
 end
 
 if string.sub(txtexec.Text, 1, 5) == (Settings.Prefix.."test") then
@@ -1951,6 +1957,20 @@ if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."placeid") then
 setclipboard(tostring(game.PlaceId))
 notify("PlaceId Copied To Clipboard.")
 end
+
+if string.sub(txtexec.Text, 1, 8) == (Settings.Prefix.."keepbar") then
+Settings.keepcmdbar = true
+Save()
+cmdbar.Enabled = true
+cmdframe.BackgroundTransparency = 0
+end
+
+if string.sub(txtexec.Text, 1, 10) == (Settings.Prefix.."unkeepbar") then
+Settings.keepcmdbar = false
+Save()
+cmdbar.Enabled = false
+end
+
 if string.sub(txtexec.Text, 1, 7) == (Settings.Prefix.."getpos") then
 setclipboard(tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame))
 notify("Position Copied To Clipboard.")
@@ -1982,9 +2002,6 @@ if string.sub(txtexec.Text, 1, 3) == (Settings.Prefix.."re") or string.sub(txtex
 refreshplr()
 end
 
-if enterPressed then
-chatboxcommands()
-end
 end)
 
 function Adminmsg(mesg)
@@ -2008,7 +2025,7 @@ CheckPermissions(v)
 end
 end
 
-notify("Welcome\nKrunox v1.6")
+notify("Welcome\nKrunox v2")
 wait(3)
 notify("Defualt Prefix is ':' ")
 wait(2)
