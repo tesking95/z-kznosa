@@ -1914,11 +1914,11 @@ end
 end)
 
 AddCommand("savepos", function()
-       savedpos = kplr.Character:FindFirstChild("HumanoidRootPart").CFrame
+savedpos = kplr.Character:FindFirstChild("HumanoidRootPart").CFrame
 end)
 
 AddCommand("loadpos", function()
-kplr.Character:FindFirstChild("HumanoidRootPart").CFrame = savepos
+kplr.Character.HumanoidRootPart.CFrame = savedpos
 end)
 
 if Settings.keepbar then
