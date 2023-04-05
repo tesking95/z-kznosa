@@ -168,7 +168,7 @@ TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel.TextSize = 14.000
 TextLabel.TextXAlignment = Enum.TextXAlignment.Left
 TextLabel.TextYAlignment = Enum.TextYAlignment.Top
-TextLabel.Text = "{1} flygui\n{2} killall (buggy)\n{3} kill [plr]\n{4} bring [plr]\n{5} voidall\n{6} bringall\n{7} walkspeed\n{8} fling\n{9} unfling\n{10} noclip\n{11} clip\n{12} walkspeed [val]\n{13} refresh\n{14} re\n{15} respawn\n{16} swim\n{17} unswim\n{18} to\n{19} dupetools [val] \n{20} cmd\n{21} cmd"
+TextLabel.Text = "{1} flygui\n{2} killall (buggy)\n{3} kill [plr]\n{4} bring [plr]\n{5} voidall\n{6} bringall\n{7} walkspeed\n{8} fling\n{9} unfling\n{10} noclip\n{11} clip\n{12} walkspeed [val]\n{13} refresh\n{14} re\n{15} respawn\n{16} swim\n{17} unswim\n{18} to\n{19} dupetools [val] \n{20} savepos\n{21} loadpos\n{21} bkillall"
 
 UICorner.Parent = ScrollingFrame
 
@@ -1913,12 +1913,20 @@ end
 end
 end)
 
+AddCommand("savepos", function()
+       savedpos = kplr.Character:FindFirstChild("HumanoidRootPart").CFrame
+end)
+
+AddCommand("loadpos", function()
+kplr.Character:FindFirstChild("HumanoidRootPart").CFrame = savepos
+end)
+
 if Settings.keepbar then
 cmdbar.Enabled = true
 end
 
 
-Notify("Krunox V11 Loaded")
+Notify("Krunox V12 Loaded")
 Notify("Press Qoute For CMDBAR")
 Notify("Chat or type in cmdbar 'cmds' for list of commands")
 while true do
