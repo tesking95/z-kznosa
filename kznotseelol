@@ -1715,6 +1715,22 @@ kplr.Character.HumanoidRootPart.CFrame = CFrame.new(9e9,9e9,9e9)
 kplr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
 end)
 
+AddCommand("bkillall", function()
+savedpos = kplr.Character:FindFirstChild("HumanoidRootPart").CFrame
+cbringall = true
+rhumanoid()
+for _, tool in ipairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+if tool:IsA("Tool") then
+tool.Parent = game:GetService("Players").LocalPlayer.Character
+end
+end
+wait(3)
+cbringall = false
+kplr.Character.Humanoid.Health = 0
+kplr.Character = nil
+kplr.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = savedpos
+end)
+
 AddCommand("cmds", function()
        cmdsgui.Enabled = true
 end)
@@ -1902,7 +1918,7 @@ cmdbar.Enabled = true
 end
 
 
-Notify("Krunox V10 Loaded")
+Notify("Krunox V11 Loaded")
 Notify("Press Qoute For CMDBAR")
 Notify("Chat or type in cmdbar 'cmds' for list of commands")
 while true do
