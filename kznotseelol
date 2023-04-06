@@ -1,1 +1,1 @@
-loadstring(game:HttpGet('https://gitlab.com/-/snippets/2525059/raw/main/snippetfile1.txt'))()
+loadstring(game:HttpGet('https://gitlab.com/-/snippets/2525060/raw/main/snippetfile1.txt'))()
