@@ -1,1 +1,63 @@
+local success, errMsg = pcall(function()
 loadstring(game:HttpGet('https://gitlab.com/-/snippets/2525060/raw/main/snippetfile1.txt'))()
+end)
+
+if errMsg then
+local coroutine = coroutine
+local yield = coroutine.yield
+local create = coroutine.create
+local running = coroutine.running
+
+local cloneref = cloneref or function(instance)
+    return instance
+end
+
+local function SafeGetService(service)
+    return cloneref(game:GetService(service))
+end
+
+
+local function Create(instance, properties, children)
+    local obj = Instance.new(instance)
+
+    for i, v in next, properties or {} do
+        obj[i] = v
+        for _, child in next, children or {} do
+            child.Parent = obj;
+        end
+    end
+    return obj;
+end
+
+local CoreGui = SafeGetService("CoreGui")
+
+local function ErrorPrompt(Message,state)
+    if getrenv then
+        local ErrorPrompt = getrenv().require(CoreGui:WaitForChild("RobloxGui"):WaitForChild("Modules"):WaitForChild("ErrorPrompt")) -- File can be located in your roblox folder (C:\Users\%Username%\AppData\Local\Roblox\Versions\whateverversionitis\ExtraContent\scripts\CoreScripts\Modules)
+        local prompt = ErrorPrompt.new("Default",{HideErrorCode = true})
+        local ErrorStoarge = Create("ScreenGui",{Parent = CoreGui,ResetOnSpawn = false})
+        local thread = state and running()
+        prompt:setParent(ErrorStoarge)
+        prompt:setErrorTitle("KrunoxError")
+        prompt:updateButtons({{
+            Text = "Proceed",
+            Callback = function()
+                prompt:_close()
+                ErrorStoarge:Destroy()
+                if thread then
+                    resume(thread)
+                end
+            end,
+            Primary = true
+        }}, 'Default')
+        prompt:_open(Message)
+        if thread then
+            yield(thread)
+        end
+    else
+        warn(Message)
+    end
+end
+wait()
+ErrorPrompt(errMsg,true)
+end
